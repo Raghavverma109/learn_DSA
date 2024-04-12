@@ -1,0 +1,17 @@
+Given a number n and a value k. From the right, set the kth bit in the binary representation of n. The position of LSB(or last bit) is 0, second last bit is 1 and so on. Also, 0 <= k < x, where x is the number of bits in the binary representation of n.
+
+#include <iostream>
+using namespace std;
+int main() {
+    int k;
+    cout<<"enter the value of k: ";
+    cin>>k;
+    int n;
+    cout<<endl<<"enter the value of n: ";
+    cin>>n;
+    int value = 1<<k;
+    int ans = n | value;
+    cout<<ans;
+    
+    return 0;
+}
