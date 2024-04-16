@@ -1,0 +1,24 @@
+
+#include <iostream>
+#include<vector>
+#include <algorithm> 
+using namespace std;
+
+int main() {
+    vector <int> arr{8,10,3,9,10};
+    bool duplicate =false;
+    for(int i =0; i<arr.size();i++){
+      for(int j=i+1 ; j<arr.size();j++){
+          if(arr[i] == arr[j]){
+              duplicate =true;
+              cout<< "Duplicate element found at " << i+1 <<" position"<<endl;
+              break;
+          }
+      }
+    }
+    if(!duplicate){
+        cout<<"No Duplicate item found!";
+    }
+    
+    return 0;
+}
