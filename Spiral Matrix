@@ -1,0 +1,56 @@
+
+54. Spiral Matrix
+
+class Solution {
+public:
+    vector<int> spiralOrder(vector<vector<int>>& arr) {
+        vector<int> new_arr;
+
+    if (arr.empty() || arr[0].empty()) {
+            return new_arr;  // Return empty vector if the input is empty
+        }
+
+    int top=0 , bottom = arr.size() -1 ,left = 0 , right =arr[0].size() -1;
+
+
+    int dir =1;
+    while((top<=bottom) && (left<=right)){
+        if(dir == 1){
+            for(int i =left;i<=right;i++){
+               new_arr.push_back(arr[top][i]);
+            }
+            ++top;
+            dir =2;
+        }
+        else if(dir == 2){
+            for(int i =top;i<=bottom;i++){
+                
+                new_arr.push_back(arr[i][right]);
+            
+            }
+            --right;
+            dir = 3;
+        }
+        else if(dir == 3){
+            for(int i =right;i>=left;i--){
+                
+                new_arr.push_back(arr[bottom][i]);
+        
+
+            }
+            --bottom;
+            dir = 4;
+        }
+        else if(dir == 4){
+            for(int i =bottom;i>=top;i--){
+            
+                new_arr.push_back(arr[i][left]);
+            
+            }
+            ++left;
+            dir=1;
+        }
+    }
+    return new_arr;
+}
+};
