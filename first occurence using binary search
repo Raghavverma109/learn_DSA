@@ -7,7 +7,10 @@ int using_binary_search(vector <int>arr,int n,int target){
     
     int s = 0;
     int e = n-1;
-    int mid = (s+e)/2;
+    //int mid = (s+e)/2;
+    int mid = s +(e-s)/2; 
+    //also applicable for large value of mid which is equal to the max value of int
+    
     
     int ans =-1;
     while(s<=e){
@@ -23,7 +26,8 @@ int using_binary_search(vector <int>arr,int n,int target){
         else if(target>arr[mid]){
             s = mid+1;
         } 
-        mid=(s+e)/2; 
+        //mid=(s+e)/2; 
+        mid = s +(e-s)/2; 
     }
     return ans;
 }
