@@ -1,0 +1,46 @@
+861. Score After Flipping Matrix
+
+class Solution {
+public:
+    int matrixScore(vector<vector<int>>& grid) {
+        int m = grid.size();
+        int n = grid[0].size();
+
+        for (int i = 0; i < m; i++) {
+            if (grid[i][0] == 0) {
+                // flip the row.
+                for (int j = 0; j < n; j++) {
+                    grid[i][j] = 1 - grid[i][j];
+                }
+            }
+        }
+
+        // toggle a column if no of 0's are more than the 1;s in a column.
+        for (int j = 1; j < n; j++) {
+            int count_zero = 0;
+            for (int i = 0; i < m; i++) {
+                if (grid[i][j] == 0) {
+                    count_zero++;
+                }
+            }
+
+            int count_one = m - count_zero;
+            if (count_zero > count_one) { // check 0's is more than 1's
+                // flip the column
+                for (int i = 0; i < m; i++) {
+                    grid[i][j] = 1 - grid[i][j];
+                }
+            }
+        }
+
+        // now finding the score.
+        int score = 0;
+        for (int i = 0; i < m; i++) {
+            for (int j = 0; j < n; j++) {
+                int value =  grid[i][j] * static_cast<int>(pow(2, n - j - 1));
+                score = score + value ;
+            }
+        }
+        return score;
+    }
+};
