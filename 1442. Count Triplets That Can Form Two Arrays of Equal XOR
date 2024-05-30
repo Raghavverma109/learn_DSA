@@ -1,0 +1,64 @@
+1442. Count Triplets That Can Form Two Arrays of Equal XOR
+
+//not a correct code for all (only valid for small size of a array).
+
+class Solution {
+public:
+    int countTriplets(vector<int>& arr) {
+        int n = arr.size();
+        int a = 0, b = 0, count = 0;
+        for (int i = 0; i < n; i++) {
+            for (int j = i + 1; j < n; j++) {
+                for (int k = j; k < n; k++) {
+                    int p =i ;
+                    int q =j;
+                    while (i < j) {
+                        a = a ^ arr[i];
+                        i++;
+                    }
+                    while (j <= k) {
+                        b = b ^ arr[j];
+                        j++;
+                    }
+                    i=p;
+                    j=q;
+                    if (a == b)
+                        count++;
+                    a=0,b=0;
+                }
+            }
+        }
+        return count;
+    }
+};
+
+
+//correct appproach for all and optimize code 
+class Solution {
+public:
+    int countTriplets(vector<int>& arr) {
+        int n = arr.size();
+        int count = 0;
+
+        // prefixXOR stores the XOR from the beginning to the current index.
+        vector<int> prefixXOR(n + 1, 0);
+
+        // Compute the prefix XOR array.
+        for (int i = 0; i < n; ++i) {
+            prefixXOR[i + 1] = prefixXOR[i] ^ arr[i];
+        }
+
+        // Iterate through all possible pairs (i, k).
+        for (int i = 0; i < n; ++i) {
+            for (int k = i + 1; k < n; ++k) {
+                if (prefixXOR[i] == prefixXOR[k + 1]) {
+                    // If prefixXOR[i] == prefixXOR[k + 1], all j from i+1 to k are valid.
+                    count += (k - i);
+                }
+            }
+        }
+
+        return count;
+    }
+};
+
