@@ -1,0 +1,38 @@
+
+
+//..............printing all the subsequence of a string ....................
+
+#include <iostream>
+#include <vector>
+using namespace std;
+
+void sub_sequence(string &s ,vector<string> &v, int i , string &output){
+
+    //base case
+    if(i>=s.length()) {
+        v.push_back(output);
+        return ;
+    }
+
+    //i th charcter not allowed (exclude)
+    sub_sequence(s ,v, i+1 , output);  
+
+    //i th charcter is allowed (include)
+    output = output + s[i];
+    sub_sequence(s ,v, i+1 , output);
+    output.pop_back();
+}
+
+int main(){
+    string s = "abcd";
+    int i =0;
+    string output = "";
+    vector<string> v;
+    sub_sequence(s , v ,i , output) ;
+    for(auto i : v){
+        cout<<i<<" ";  
+    }    
+    cout<<endl;
+    cout<<"Size of a vector : "<<v.size()<<endl;
+
+}
