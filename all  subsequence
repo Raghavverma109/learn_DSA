@@ -2,6 +2,8 @@
 
 //..............printing all the subsequence of a string ....................
 
+//...............Concept : copy .............................................
+
 #include <iostream>
 #include <vector>
 using namespace std;
