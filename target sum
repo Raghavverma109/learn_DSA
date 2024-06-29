@@ -1,0 +1,36 @@
+
+//..............Minimum no of element reruired to reach target sum ....................
+#include <iostream>
+#include <vector>
+#include <limits.h>
+using namespace std;
+
+int reach_target(vector<int> &arr, int target)
+{
+    // base cases
+    if (target == 0)
+        return 0;
+    if (target < 0)
+        return INT_MAX;
+
+    // let's solve onne case .
+    int mini = INT_MAX;
+    // run for all element in the array .
+    for (int i = 0; i < arr.size(); i++)
+    {
+        int ans = reach_target(arr, target - arr[i]);
+        if (ans != INT_MAX)
+        {
+            mini = min(mini, ans + 1);
+        }
+    }
+    return mini;
+}
+
+int main()
+{
+    int target = 5;
+    vector<int> arr = {1, 2};
+    int result = reach_target(arr, target);
+    cout << ".Minimum no of element reruired to reach target sum :  " << result << endl;
+}
