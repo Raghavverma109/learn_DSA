@@ -1,0 +1,38 @@
+
+//...................max sum of non-adjacent element ......................
+//....CONCEPT: same as subsequence question............
+#include <iostream>
+#include <vector>
+#include <limits.h>
+using namespace std;
+
+int max_sum(vector<int> &v, int i, int sum, int &maxi)
+{
+    // base case
+    if (i >= v.size())
+    {
+        maxi = max(sum, maxi); // maxi update
+        return maxi;
+    }
+
+    // include
+
+    //  sum = sum + v[i];
+    // max_sum(v, i + 2, sum , maxi);
+    // sum = sum - v[i];
+
+    //or
+    max_sum(v, i + 2, sum+v[i] , maxi);
+
+    // exclude
+    max_sum(v, i + 1, sum, maxi);
+}
+int main()
+{
+    vector<int> v{2, 1, 4, 9};
+    int i = 0;
+    int sum = 0;
+    int maxi = INT_MIN;
+    int ans = max_sum(v, i, sum, maxi);
+    cout << "max sum of non-adjacent element  : " << ans << endl;
+}
