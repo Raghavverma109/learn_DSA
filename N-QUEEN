@@ -1,0 +1,73 @@
+// .............N-Queen ................
+
+#include <iostream>
+using namespace std;
+#include <vector>
+void printSolution(vector<vector<char>>& board , int n){
+    
+    for(int i =0 ; i< n ; i++){
+        for(int j =0 ; j< n ; j++){
+            cout<<board[i][j]<<" ";
+    } 
+    cout<<endl;
+    }    
+    cout<<endl;
+}
+bool isSafe(int row ,int col ,vector<vector<char>>& board,int n){
+    //check karna h ki , kiya me current cell pr queen place kar sakta hu ya nahi
+    int i =row , j =col;
+    
+    //check left row 
+    while(j>=0){ 
+        if(board[i][j] == 'Q') return false;
+        j--;
+    }
+    
+    //check upper left diagonal 
+    i= row , j =col;
+     while(j>=0 && i>=0) {
+        if(board[i][j] == 'Q') return false;
+        j-- , i--;
+    }
+    
+    //check bottom left diagonal;
+    i= row , j =col;
+     while(j>=0 && i<n) {
+        if(board[i][j] == 'Q') return false;
+        j-- , i++;
+    }
+    
+    //kari per bhi queen nahi milli
+    //so return true 
+    return true;
+}
+void solve(vector<vector<char>>& board , int col ,int n){
+    //base case 
+    if(col>=n) {
+        printSolution(board , n);
+        return ;
+    }
+    
+    //ek case solve kardo bakki recurion samal lega 
+    for(int row = 0; row <n;row++){
+        if(isSafe(row , col ,board , n)){
+            board[row][col] = 'Q';
+            
+            //recursive call
+            solve(board , col+1 , n); 
+            
+            //backtracting 
+             board[row][col] = '-';
+        }
+    }
+}
+int main() {
+    int n =5 ;
+    vector<vector<char>>board(n , vector<char>(n ,'-'));
+    int col = 0;
+    
+    cout<<"printing the possibles positions of QUEEN with all differnt cases :-"<<endl;
+    solve(board , col , n);
+
+    return 0;
+}
