@@ -1,0 +1,192 @@
+//.................Singly Linked list operations................
+#include <iostream>
+using namespace std;
+
+class Node{
+    public: 
+        int data;
+        Node*next;
+        
+    Node(){
+        this->data = 0;
+        this->next = NULL;
+    }
+    Node(int data){
+        this->data = data;
+        this->next = NULL;
+    }
+};
+
+void insertAtHead(Node* &head , Node* & tail ,int data){
+    
+    if(head== NULL){
+         //empty LL - first node ab add hoga
+         Node *newNode = new Node(data);
+         head = newNode;
+         tail = newNode;
+         return;
+     }
+    //NON- EMPTY LL
+    Node *newNode = new Node(data);
+    newNode->next = head;
+    head = newNode;
+}
+
+void insertAtTail(Node* &head , Node* & tail ,int data){
+    
+    if(tail== NULL){
+          //empty LL - first node ab add hoga
+         Node *newNode = new Node(data);
+         head = newNode;
+         tail = newNode;
+         return;
+     }
+     
+    //NON- EMPTY LL
+    Node *newNode = new Node(data);
+
+    tail->next = newNode;
+    tail = newNode;
+}
+
+int findLength(Node * & head){
+    int len=0;
+    Node * temp = head;
+    while(temp != NULL){
+        temp =temp->next;
+        len++;
+    }
+    return len;
+}
+
+void insertAtPosition(Node* & head , Node* & tail ,int data ,int pos){
+    
+    //at the starting -  insertAtHead
+    if(pos == 1){
+        insertAtHead(head ,tail , data);
+        return;
+    }
+    
+    //at the last -  insertAtTail
+    int len = findLength(head);
+    if (pos > len + 1) {
+        cout << "Position out of bounds!" << endl;
+        return;
+    }
+    if(pos == len+1){
+        insertAtTail(head ,tail , data);
+        return;
+    }
+    
+    //insert in between.
+    int i =1; 
+    Node *prev=head;
+    while(i<pos-1){
+        prev =prev->next;
+        i++;
+    }
+    Node * curr = prev->next;
+    Node *newNode = new Node(data);
+    newNode ->next = curr;
+    prev->next = newNode;
+}
+
+void deleteNode(Node * & head , Node * & tail , int pos){
+    //empty LL - cannot delete
+    if(head == NULL) {
+        cout<<"cannot delete , empty LL "<<endl;
+        return;
+    }
+    
+    //delete first node
+    if(pos ==1){
+        Node * temp = head;
+        head= head->next;
+        temp ->next =NULL;
+        cout<<"deleting node :"<<temp->data<<endl;
+        delete temp;
+        return;
+    }
+    
+    //delete last node.
+    int len = findLength(head);
+    if (pos > len || pos < 1) {
+        cout << "Position out of bounds!" << endl;
+        return;
+    }
+    if(pos == len){ 
+        if(head == tail) {  // If only one node is present
+        delete head;
+        head = tail = NULL;
+        return;
+        }
+        Node * prev = head;
+        int i =1;
+    // step 1- fing prev
+        while(i<pos-1){
+        prev=prev->next;
+        i++;
+    }
+    // step 2-
+    prev ->next = NULL;
+    // step 3-
+    Node * temp = tail;
+    //step 4-
+    tail = prev;
+    //step 5-
+    cout<<"deleting node :"<<temp->data<<endl;
+    delete temp;
+    return;
+    }
+    
+    //delete in between node
+    int i =1;
+    Node* prev = head;
+    while(i<pos-1){
+        prev=prev->next;
+        i++;
+    }
+    Node *  curr = prev ->next;
+    prev->next = curr->next;
+    curr->next = NULL;
+    cout<<"deleting node :"<<curr->data<<endl;
+    delete curr;
+    return;
+}
+
+void print(Node * head){
+    cout<<"Printing the linkedlist : "<<endl;
+    Node * temp = head;
+    while(temp != NULL){
+        cout<<temp->data<<" ";
+        temp = temp ->next;
+    }   
+    cout<<endl;
+}
+
+int main() {
+    
+    Node *head = NULL;
+    Node *tail = NULL;
+    
+    insertAtHead(head ,tail , 10);
+    insertAtHead(head ,tail , 20);
+    
+    insertAtTail(head ,tail , 999);
+    insertAtTail(head ,tail , 1199);
+    
+    print(head);
+    cout<<endl;
+    
+    insertAtPosition(head , tail , 1111 , 3);
+    
+    print(head);
+    cout<<endl;
+    
+    deleteNode(head ,tail ,2);
+    
+    print(head);
+    cout<<endl;
+    
+    return 0;
+}
