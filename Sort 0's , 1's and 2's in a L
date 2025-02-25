@@ -1,0 +1,141 @@
+//............Sort 0's , 1's and 2's in a LL...............
+#include <iostream>
+using namespace std ;
+
+class Node {
+    public:
+        int data;
+        Node * next;
+        Node(){
+            this->data = 0;
+            this->next = NULL;
+        }
+        Node(int data){
+            this->data = data;
+            this->next = NULL;
+        }
+};
+
+//printing the LL
+void print (Node * & head){
+    Node * temp = head;
+    while(temp != NULL){
+        cout<<temp->data<<"->" ;
+        temp = temp ->next;
+    }
+    cout<<"❌" <<endl;
+    return;
+}
+
+Node * sortZeroOneTwo(Node * head){
+    
+    //creating dummy nodes
+    Node * zeroHead = new Node(-1);
+    Node * zeroTail =zeroHead;
+    
+    Node * oneHead = new Node(-1);
+    Node * oneTail= oneHead;
+    
+    Node * twoHead = new Node(-1);
+    Node * twoTail = twoHead;
+    
+    //traverse the original LL
+    Node * curr = head ;
+    while(curr != NULL){
+        if(curr->data == 0 ){
+            
+            //take out zero wali node.
+            Node * temp = curr;
+            curr = curr->next;
+            temp ->next = NULL;
+            
+            //append the zero node in zeronode LL.
+            zeroTail ->next = temp;
+            zeroTail = temp;
+        }
+        
+        else if(curr->data == 1 ){
+            
+            //take out one wali node.
+            Node * temp = curr;
+            curr = curr->next;
+            temp ->next = NULL;
+            
+            //append the one node in onenode LL.
+            oneTail ->next = temp;
+            oneTail = temp;
+        }
+        
+        else if(curr->data == 2 ){
+            
+            //take out two wali node.
+            Node * temp = curr;
+            curr = curr->next;
+            temp ->next = NULL;
+            
+            //appen the two node in twonode LL.
+            twoTail ->next = temp;
+            twoTail = temp;
+        }
+    }
+        
+        // deleting the extra node and modify it .
+        //remove the extra -1 wala node from the 1 wali LL.
+        Node * temp = oneHead;
+        oneHead = oneHead->next;
+        temp ->next = NULL;
+        delete temp;
+        
+        //remove the extra -1 wala node from the 2 wali LL.
+        temp = twoHead;
+        twoHead = twoHead->next;
+        temp ->next = NULL;
+        delete temp;
+        
+        //connect all 3 LL with each other.
+        if(oneHead != NULL){
+            zeroTail ->next = oneHead;
+            if(twoHead != NULL){
+                oneTail ->next = twoHead;                
+            }
+        }
+        else{
+            if(twoHead != NULL){
+                zeroTail ->next = twoHead;                
+            }
+        }
+        
+        //remove the extra -1 wala node from the 0 wali LL.
+        temp = zeroHead;
+        zeroHead = zeroHead->next;
+        temp ->next = NULL;
+        delete temp;
+        
+        return zeroHead;
+}
+
+int main() {
+    
+    Node * head = new Node(2);
+    Node * second = new Node(1);
+    Node * third = new Node(0);
+    Node * fourth = new Node(2);
+    Node * fifth = new Node(0);
+    
+    head->next =second ;
+    second->next = third;
+    third->next = fourth;
+    fourth->next = fifth;
+    fifth->next = NULL;
+
+    cout<<"Printing the LL - before sorting: "<<endl;
+    print(head);
+    cout<<endl;
+    
+    head = sortZeroOneTwo(head);
+    
+    cout<<"Printing the LL - after sorting: "<<endl;
+    print(head);
+    
+    return 0;
+}
