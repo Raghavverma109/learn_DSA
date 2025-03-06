@@ -1,0 +1,44 @@
+// .......................Next Smallest Element ( stack ).................... 
+
+#include <iostream>
+#include <stack>
+#include <vector>
+using namespace std;
+
+void samllElement(stack<int> &s ,vector<int> &v , vector<int> &ans){
+    //trsverse the whole vector/ array from right to left
+    for(int i = v.size()-1 ; i>=0 ;i--){
+        int curr = v[i];
+        //when ever current element is samller pop elements from the stack
+        while(curr <= s.top()){
+            s.pop();    
+        }
+        ans[i] = s.top();//save the ans
+        s.push(curr);//when small element found push them into stack
+    }
+}
+
+int main() {
+    vector<int>v;
+    v.push_back(2);
+    v.push_back(1);
+    v.push_back(4);
+    v.push_back(3);
+    
+    //vector for storing the samllest element for respective element
+    vector<int>ans(v.size());
+    stack<int>s;
+    //initialize stack with -1
+    s.push(-1);
+    
+    //function call 
+    samllElement(s ,v , ans );
+    
+    //printing te final ans array/vector
+    cout<<"Printing ...."<<endl;
+    for(int i = 0 ;i<ans.size() ;i++){
+        cout<<ans[i] <<" ";
+    }
+    cout<<endl;
+    return 0;
+}
