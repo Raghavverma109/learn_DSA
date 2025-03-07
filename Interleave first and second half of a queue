@@ -1,0 +1,61 @@
+//...............Interleave first and second half of a queue..................
+
+#include <iostream>
+#include<queue>
+#include<stack>
+using namespace std;
+
+void Interleave(queue<int>& q){
+    
+    if(q.empty()) return;
+    
+    int n = q.size();
+    queue<int> q1;
+    
+    int count = 0;
+    while(count < n/2 ){
+        q1.push(q.front());
+        q.pop();
+        count++ ;
+    }
+    
+    while(!q.empty() && !q1.empty()){
+        q.push(q1.front());
+        q1.pop();
+        
+        q.push(q.front());
+        q.pop();
+    }
+    
+    //handeling the odd no of element cases
+    if(n&1){
+        q.push(q.front());
+        q.pop();
+    }
+}
+
+void print(queue<int> q) {  // Pass by value to preserve original queue
+    while (!q.empty()) {
+        cout << q.front() << " ";
+        q.pop();
+    }
+    cout << endl;
+}
+
+int main(){
+    queue <int> q;
+    q.push(10);
+    q.push(20);
+    q.push(30);
+    q.push(40);
+    q.push(50);
+    // q.push(60);
+    
+    cout<<"Queue before Interleave first and second half :"<<endl;
+    print(q);
+    
+    Interleave(q);
+    
+    cout<<"Queue after Interleave first and second half "<<endl;
+    print(q);
+}
