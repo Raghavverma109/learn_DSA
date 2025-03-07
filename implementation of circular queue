@@ -1,0 +1,112 @@
+//..............implementation of circular queue using array...........
+
+#include <iostream>
+#include <vector>
+#include <queue>
+using namespace std;
+
+class circularQueue{
+    public: 
+        int size ;
+        int *arr;
+        int front ;
+        int rear;
+        
+        circularQueue(int size){
+            this->size = size;
+            arr = new int [size];
+            front = -1;
+            rear = -1;
+        }
+        
+        ~circularQueue() {
+        delete[] arr;
+    }
+
+        
+        void push(int data){
+            //Queue full
+            if(front == 0 && rear == size -1){
+                cout<<"queue is full "<<endl;
+            }
+            
+            //first element
+            else if(front == -1){
+                front = rear = 0;
+                arr[rear] = data;
+            }
+        
+            //circular nature
+            else if(rear == size-1 && front != 0){
+                rear =0;
+                arr[rear] = data;
+            }
+            
+            //normal flow (default case)
+            else{
+                rear++;
+                arr[rear] = data;
+            }
+        }
+        
+        void pop(){
+            
+            //empty check
+            if(front == -1){
+                cout<<"Queue is empty"<<endl;
+            }
+            
+            //single element
+            else if(front == rear){
+                arr[front] = -1;
+                //after poping
+                front = rear = -1;
+            }
+        
+            //circular natue 
+            else if(front == size -1){
+                front = 0;
+            }
+            
+            //normal flow (default case)
+            else {
+                front ++;
+            }
+        }
+        
+        void print (){
+            cout << "Queue elements: "<<endl;
+        int i = front;
+        while (true) {
+            cout << arr[i] << " ";
+            if (i == rear) break;
+            i = (i + 1) % size;
+        }
+        cout << endl;
+        }
+    
+    
+};
+
+
+int main() {
+   
+   circularQueue q(3) ;
+   q.push(10);
+   q.push(20);
+   q.push(30);
+   
+   q.pop();
+   
+   
+   q.print();
+   
+   q.pop();
+   q.pop();
+   q.pop();
+   
+   q.print();
+   
+
+    return 0;
+}
