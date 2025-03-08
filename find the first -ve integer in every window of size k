@@ -1,0 +1,54 @@
+// ..................find the first -ve integer in every window of size k ...........................
+#include <iostream>
+#include<queue>
+#include<vector>
+using namespace std;
+
+void solve(vector<int>& arr , int k){
+    
+    //queue to store the indices of the -ve no.
+    queue<int>q;
+    
+    //step 1 - process the whole window first
+    for(int i = 0; i<k ; i++){
+        int curr = arr[i];
+        if(curr < 0) q.push(i); 
+    }
+    
+    //step 2 - window moves - remaining window ko process karo.
+
+    //now take care of the rest of the array element which is from k to n.
+    for(int i = k ; i<arr.size() ;i++){ 
+        
+            // a - print the ans.
+            if(q.empty()) cout<<0<<" "; //when queue is empty.
+            else cout<<arr[q.front()]<<" ";
+            
+            // b - remove out of window element 
+            while((!q.empty()) && (i-q.front() >=k)){
+                q.pop();
+            }
+            
+            // c - new element window mw insert kardo.
+            if(arr[i]<0) q.push(i);
+    }
+    
+    //answer print karon for the last window  
+    
+    if(q.empty()) cout<< 0 <<" ";
+    else cout<< arr[q.front()]<<" ";
+    
+     cout << endl;
+    
+}
+
+int main() {
+    
+    //input vector and k
+    int k =3;
+    vector<int>arr = {12,-1,-7,8,-15,30,16,28};
+ 
+    solve(arr ,k);
+    
+    return 0;
+}
