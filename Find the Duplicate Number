@@ -28,19 +28,22 @@ public:
 };
 
 
-//3rd method
+//3rd method : mark vistied 
 class Solution {
 public:
     int findDuplicate(vector<int>& nums) {
-        int index = abs(nums[i]);
+        for (int i = 0; i < nums.size(); i++) {
+            int index = abs(nums[i]);
 
-        //already visited
-        if(nums[i]<0) return index;
-
-        //visited mark
-        nums[index]*=-1;
+            // already visited
+            if (nums[index] < 0)
+                return abs(index);
+            // mark as visited
+            nums[index] *= (-1);
+        }
+        return 0;
     }
-    return 0;
+        
 };
 
 
