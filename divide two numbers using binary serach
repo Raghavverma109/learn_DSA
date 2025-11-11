@@ -1,0 +1,67 @@
+#include <iostream>
+#include <cmath>
+using namespace std;
+
+// Function to perform division using binary search
+double divide(int dividend, int divisor, int precision) {
+    // Handle edge cases
+    if (divisor == 0) {
+        cout << "Error: Division by zero!" << endl;
+        return -1;
+    }
+    if (dividend == 0) return 0;
+
+    bool isNegative = (dividend < 0) ^ (divisor < 0);
+
+    long long absDividend = abs(dividend);
+    long long absDivisor = abs(divisor);
+
+    // --- Step 1: Integer part using binary search ---
+    int s = 0, e = absDividend;
+    double ans = 0;
+
+    while (s <= e) {
+        long long mid = s + (e - s) / 2;
+        long long val = mid * absDivisor;
+
+        if (val == absDividend) {
+            ans = mid;
+            break;
+        } else if (val < absDividend) {
+            ans = mid;
+            s = mid + 1;
+        } else {
+            e = mid - 1;
+        }
+    }
+
+    // --- Step 2: Decimal precision refinement ---
+    double step = 0.1;
+    for (int i = 0; i < precision; i++) {
+        while ((ans + step) * absDivisor <= absDividend) {
+            ans += step;
+        }
+        step /= 10;
+    }
+
+    // Apply sign
+    if (isNegative) ans = -ans;
+
+    return ans;
+}
+
+// --- Main function ---
+int main() {
+    int dividend, divisor, precision;
+    cout << "Enter dividend: ";
+    cin >> dividend;
+    cout << "Enter divisor: ";
+    cin >> divisor;
+    cout << "Enter precision: ";
+    cin >> precision;
+
+    double result = divide(dividend, divisor, precision);
+    cout << "Result: " << result << endl;
+
+    return 0;
+}
