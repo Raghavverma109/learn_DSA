@@ -1,0 +1,40 @@
+class Solution {
+  public:
+  
+    bool possibleSolution(vector<int>& arr, int sol, int n, int k){
+        int pageSum = 0, c =1;
+        for(int i =0; i <n; i++){
+            if(arr[i]>sol) return false;
+            if(arr[i]+pageSum > sol){
+                c++;
+                pageSum = arr[i];
+                if(c>k) { 
+                    // if the allocate the pages to the more students than we have 
+                    return false;
+                }
+            }
+            else{
+                pageSum += arr[i];
+            }
+        }
+        return true;
+    }
+    int findPages(vector<int> &arr, int k) {
+        int n = arr.size();
+        if(k>n) return -1;
+        int s = 0 , e = accumulate(arr.begin(), arr.end(), 0);
+        int ans = -1;
+        while(s <= e){
+            int mid = s + (e-s)/2;
+            if(possibleSolution(arr,mid,n,k)){
+                // it may be the ans, store it and minimize the no. of pages or window size
+                ans = mid;
+                e = mid -1;
+            }
+            else{
+                s = mid +1;
+            }
+        }
+        return ans;
+    }
+};
