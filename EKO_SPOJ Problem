@@ -4,8 +4,8 @@
 #include<algorithm>
 using namespace std;
 
-bool isPossibleSolution(vector<long long int>trees, long long k,long long int n, long long int mid){
-    int woodCollect = 0;
+bool isPossibleSolution(vector<long long int>& trees, long long k,long long int n, long long int mid){
+    long long int woodCollect = 0;
     for(long long int i =0;i<n;i++){
         int leftWood = trees[i]-mid;
         if(leftWood >=0) woodCollect += leftWood;
@@ -30,11 +30,11 @@ int EKO_SPOJ(vector<long long int>& trees,long long int n , long long int k){
 int main() {
     long long int n, k;
     cin>>n>>k;
-    vector<long long int>trees;
+    vector<long long int>trees(n);
     for(long long int i=0;i<n;i++){
         cin>>trees[i];
     }
-    return EKO_SPOJ(trees,n,k);
-
+    cout << EKO_SPOJ(trees, n, k);
     return 0;
+
 }
