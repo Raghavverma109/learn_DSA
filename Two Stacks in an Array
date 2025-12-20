@@ -1,0 +1,45 @@
+class twoStacks {
+public:
+    int *arr;
+    int top1, top2;
+    int size;
+
+    twoStacks() {
+        size = 100;
+        arr = new int[size];
+        top1 = -1;
+        top2 = size;
+    }
+
+    // Push in stack 1
+    void push1(int x) {
+        if (top2 - top1 == 1) {
+            return;
+        }
+        arr[++top1] = x;
+    }
+
+    // Push in stack 2
+    void push2(int x) {
+        if (top2 - top1 == 1) {
+            return;
+        }
+        arr[--top2] = x;
+    }
+
+    // Pop from stack 1
+    int pop1() {
+        if (top1 == -1) {
+            return -1;
+        }
+        return arr[top1--];
+    }
+
+    // Pop from stack 2
+    int pop2() {
+        if (top2 == size) {
+            return -1;
+        }
+        return arr[top2++];
+    }
+};
