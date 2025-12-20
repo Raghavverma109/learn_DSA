@@ -1,0 +1,84 @@
+// implementation of Stack using array.
+#include <iostream>
+#include <array>
+using namespace std;
+
+class Stack{
+  public: 
+    int size;
+    int *arr;
+    int top;
+    
+    // constructor
+    Stack(int size){
+        arr = new int [size];
+        this->size = size;
+        top = -1;
+    }
+    
+    // destructure 
+    ~Stack() {
+        delete[] arr;
+    }
+
+    // functions of a STACK
+     void push(int data){
+         // stack is full
+         if(top == size-1){
+             cout<<"Stack overflow ! ";
+         }
+         else{
+             top++;
+             arr[top] = data;
+         }
+     }
+      void pop(){
+         //stack is not empty
+         if(top == -1){
+             cout<<"Stack underflow ! ";
+         }
+         else{
+             top--;
+         }
+     }
+      void peek(){
+        cout<<"top of a stack is : "<<arr[top]<<endl;
+     }
+     
+     void getSize(){
+        cout<<"size of a Stack : "<<top+1<<endl;
+     }
+     
+     // only for testing not recommend this
+     void print(){
+         for(int i =0 ;i<= top;i++){
+             cout<<arr[i]<<" ";
+         }
+         cout<<endl;
+     }
+};
+
+int main() {
+    Stack s(10);
+    
+    s.push(100);
+    s.print();
+    s.push(200);
+    s.print();
+    s.push(300);
+    s.print();
+    s.push(400);
+    s.print();
+    s.push(500);
+    s.print();
+    s.push(600);
+    s.print();
+    
+    s.pop();
+    s.print();
+    s.pop();
+    s.print();
+    
+    s.peek();
+    s.getSize();
+}
