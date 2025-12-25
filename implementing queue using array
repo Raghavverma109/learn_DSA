@@ -1,0 +1,92 @@
+// implementing queue using array
+#include <iostream>
+using namespace std;
+ 
+ class Queue{
+     public: 
+     int front;
+     int rear;
+     int size;
+     int * arr;
+     
+     Queue(int size){
+         arr = new int [size];
+         this->size =size;
+         front = 0;
+         rear = 0;
+     }
+     
+     void push(int data){
+         if(rear == size){
+             cout<<"Queue is full - OVERFLOW"<<endl;
+         }
+         else{
+             arr[rear] = data;
+             rear++;
+         }
+     }
+     void pop(){
+         if(front == rear) {
+             cout<<"Queue is empty - UNDERFLOW!"<<endl;
+         }
+         else{
+             arr[front] = -1;
+             front ++;
+             if(front == rear){
+                 front = 0;
+                 rear = 0;
+             }
+         }
+     }
+     
+     int getfront(){
+         if(front == rear){
+             cout<<"Queue is empty "<<endl;
+             return -1;
+         }
+        return arr[front];
+     }
+     
+     int getsize() {
+         return (rear-front);
+     }
+     
+     bool isEmpty(){
+         if(front ==  rear) {
+             return true;
+         }
+         else {
+             return false;
+         }
+     }
+ };
+
+int main() {
+    Queue q(6);
+    q.push(10);
+    q.push(20);
+    q.push(30);
+    q.push(40);
+    q.push(50);
+    
+    cout<<"front element "<<q.getfront()<<endl;
+    cout<<"size "<<q.getsize()<<endl;
+    
+    q.pop();
+    cout<<"front element "<<q.getfront()<<endl;
+    cout<<"size "<<q.getsize()<<endl;
+    
+    q.pop();
+    cout<<"front element "<<q.getfront()<<endl;
+    cout<<"size "<<q.getsize()<<endl;
+    
+    q.push(100);
+    cout<<"size "<<q.getsize()<<endl;
+    q.push(110);
+    
+    
+    
+    
+    
+    return 0;
+}
